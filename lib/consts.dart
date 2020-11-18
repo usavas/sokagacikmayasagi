@@ -11,10 +11,17 @@ const Color kActionButtonColor = Color(0xFF3FE4F1);
 
 const BoxDecoration kPageBgDecoration = BoxDecoration(
     gradient: LinearGradient(
-  begin: Alignment.bottomCenter,
-  end: Alignment.topCenter,
-  colors: [Color(0xFF60BF59), Color(0xFF0088FF)],
+  begin: Alignment.topRight,
+  end: Alignment.bottomLeft,
+  colors: [Color(0xFF38b01a), Color(0xFF38b01a)],
 ));
+
+// const BoxDecoration kPageBgDecoration = BoxDecoration(
+//     gradient: LinearGradient(
+//   begin: Alignment.bottomCenter,
+//   end: Alignment.topCenter,
+//   colors: [Color(0xFF60BF59), Color(0xFF0088FF)],
+// ));
 
 final BoxDecoration kInputFieldBgDecoration = BoxDecoration(
     color: kWidgetBgColor,
