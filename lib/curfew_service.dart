@@ -1,5 +1,5 @@
 import 'package:age/age.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class CurfewService {
   CurfewService._();
@@ -12,7 +12,10 @@ class CurfewService {
   }
 
   bool isUnder20(DateTime dob) {
-    return DateTime.now().year - dob.year <= 20;
+    int diffInDays =
+        Age.dateDifference(fromDate: dob, toDate: DateTime(2000)).days;
+    bool val = (diffInDays <= 0);
+    return val;
   }
 
   bool isAbove65(DateTime dob) {
@@ -48,21 +51,21 @@ class CurfewService {
 
     if (_isUnder20) {
       DateTime now = DateTime.now();
-      return _calculate(
+      return _isBetweenFreehours(
           DateTime(now.year, now.month, now.day, _under20StartHour),
           DateTime(now.year, now.month, now.day, _under20EndHour));
     }
 
     if (_isAbove65) {
       DateTime now = DateTime.now();
-      return _calculate(
+      return _isBetweenFreehours(
           DateTime(now.year, now.month, now.day, _over65StartHour),
           DateTime(now.year, now.month, now.day, _over65EndHour));
     }
 
     if (_isWeekendField) {
       DateTime now = DateTime.now();
-      return _calculate(
+      return _isBetweenFreehours(
           DateTime(now.year, now.month, now.day, _weekendFreeStartHour),
           DateTime(now.year, now.month, now.day, _weekendFreeEndhour));
     } else {
@@ -70,7 +73,7 @@ class CurfewService {
     }
   }
 
-  bool _calculate(DateTime startTime, DateTime endTime) {
+  bool _isBetweenFreehours(DateTime startTime, DateTime endTime) {
     DateTime now = DateTime.now();
     return (now.difference(startTime).inSeconds > 0 &&
         endTime.difference(now).inSeconds > 0);

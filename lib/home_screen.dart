@@ -6,6 +6,8 @@ import 'package:sokagacikmayasagi/consts.dart';
 import 'package:sokagacikmayasagi/personalinfo_provider.dart';
 import 'package:sokagacikmayasagi/result_screen.dart';
 
+import 'curfew_service.dart';
+
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key}) : super(key: key);
 
@@ -137,6 +139,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     backgroundColor: Color(0xFF38b01a),
                     textColor: Colors.white,
                     onPressedFunction: () {
+                      bool workds =
+                          CurfewService.getInstance.canGoOut(_dob, _works);
                       Navigator.push(
                           context,
                           MaterialPageRoute(
