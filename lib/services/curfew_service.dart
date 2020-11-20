@@ -1,12 +1,10 @@
 import 'package:age/age.dart';
-import 'package:flutter/material.dart';
 
 class CurfewService {
   CurfewService._();
 
   static CurfewService _instance;
 
-  @visibleForTesting
   static CurfewService get getInstance {
     return _instance = _instance ?? CurfewService._();
   }
@@ -43,8 +41,11 @@ class CurfewService {
     bool _isUnder20 = isUnder20(dob);
     bool _isAbove65 = isAbove65(dob);
 
+    TimeLeft _timeLeft = TimeLeft(0, 0);
+
     if (!_isWeekendField) {
       if (works) {
+        // _timeLeft = null;
         return true;
       }
     }
@@ -80,6 +81,16 @@ class CurfewService {
   }
 
   TimeLeft getTimeLeft(DateTime time) {}
+
+  // static Stream<TimeLeft> get timeLeft async* {
+  //   TimeLeft timeLeft = TimeLeft(2,10);
+  //   while () {
+  //     await Future.delayed(Duration(seconds: 1), () {
+  //       i++;
+  //     });
+  //     yield i;
+  //   }
+  // }
 }
 
 class TimeLeft {

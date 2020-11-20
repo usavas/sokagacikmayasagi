@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:age/age.dart';
-import 'package:sokagacikmayasagi/curfew_service.dart';
+import 'package:sokagacikmayasagi/services/curfew_service.dart';
 
 void main() {
   test('age_ageEquals28', () {

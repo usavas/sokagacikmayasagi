@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'consts.dart';
+import '../consts.dart';
 
 class TextInput extends StatelessWidget {
   const TextInput(this.hintText, this.controller, this.validator,

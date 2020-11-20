@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sokagacikmayasagi/record.dart';
+import 'package:sokagacikmayasagi/models/record.dart';
 
 void main() {
   test('toJson', () {

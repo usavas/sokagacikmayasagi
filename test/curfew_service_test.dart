@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sokagacikmayasagi/curfew_service.dart';
+import 'package:sokagacikmayasagi/services/curfew_service.dart';
 
 void main() {
   test('isAbove65_returnsTrue', () {

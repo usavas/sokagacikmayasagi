@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sokagacikmayasagi/home_screen.dart';
+import 'package:sokagacikmayasagi/UI/home_screen.dart';
 
 void main() {
   runApp(MyApp());

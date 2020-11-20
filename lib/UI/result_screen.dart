@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sokagacikmayasagi/buttons.dart';
+import 'package:provider/provider.dart';
+import 'package:sokagacikmayasagi/services/curfew_provider.dart';
+import 'package:sokagacikmayasagi/services/curfew_service.dart';
+import 'package:sokagacikmayasagi/shared_widgets/buttons.dart';
 import 'package:sokagacikmayasagi/consts.dart';
 
 class ResultScreen extends StatefulWidget {
@@ -27,6 +30,12 @@ class _ResultScreenState extends State<ResultScreen> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
+              // StreamProvider<int>(
+              //   create: (_) => CurfewService.getInstance.personAge,
+              //   child: Consumer<int>(
+              //     builder: (context, i, child) => Text(i.toString()),
+              //   ),
+              // ),
               Image.asset(
                 'assets/images/tebrikler.png',
                 width: MediaQuery.of(context).size.width / 3 * 2,
