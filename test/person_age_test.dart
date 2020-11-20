@@ -1,6 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:age/age.dart';
-import 'package:sokagacikmayasagi/services/curfew_service.dart';
+import 'package:sokagacikmayasagi/models/person.dart';
 
 void main() {
   test('age_ageEquals28', () {
@@ -20,17 +20,27 @@ void main() {
   });
 
   test('bornAfter01012020_Under20_returnsTrue', () {
-    var isUnder20 = CurfewService.getInstance.isUnder20(DateTime(2000, 10));
+    var isUnder20 = Person(dob: DateTime(2000, 10)).isUnder20();
     expect(isUnder20, true);
   });
 
   test('bornTheDayOn01012020Under20_returnsTrue', () {
-    var isUnder20 = CurfewService.getInstance.isUnder20(DateTime(2000));
+    var isUnder20 = Person(dob: DateTime(2000)).isUnder20();
     expect(isUnder20, true);
   });
 
   test('bornBefore2020Under20_returnsFalse', () {
-    var isUnder20 = CurfewService.getInstance.isUnder20(DateTime(1999, 12, 31));
+    var isUnder20 = Person(dob: DateTime(1999, 12, 31)).isUnder20();
     expect(isUnder20, false);
+  });
+
+  test('bornOn1955_isAbove65_returnsTrue', () {
+    var res = Person(dob: DateTime(1955, 11, 17)).isAbove65();
+    expect(res, true);
+  });
+
+  test('isAbove65_returnsFalse', () {
+    var res = Person(dob: DateTime(1955, 12, 31)).isAbove65();
+    expect(res, false);
   });
 }

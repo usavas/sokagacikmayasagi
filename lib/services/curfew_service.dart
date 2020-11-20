@@ -1,4 +1,5 @@
-import 'package:age/age.dart';
+import 'package:sokagacikmayasagi/models/person.dart';
+import 'package:sokagacikmayasagi/models/time_left.dart';
 
 class CurfewService {
   CurfewService._();
@@ -9,22 +10,9 @@ class CurfewService {
     return _instance = _instance ?? CurfewService._();
   }
 
-  bool isUnder20(DateTime dob) {
-    int diffInDays =
-        Age.dateDifference(fromDate: dob, toDate: DateTime(2000)).days;
-    bool val = (diffInDays <= 0);
-    return val;
-  }
-
-  bool isAbove65(DateTime dob) {
-    return Age.dateDifference(
-                fromDate: dob, toDate: DateTime.now(), includeToDate: false)
-            .years >=
-        65;
-  }
-
   bool _isWeekend(DateTime date) {
-    return (date.day == DateTime.saturday || date.day == DateTime.sunday);
+    return (date.weekday == DateTime.saturday ||
+        date.weekday == DateTime.sunday);
   }
 
   static const int _weekendFreeStartHour = 10;
@@ -36,28 +24,25 @@ class CurfewService {
   static const int _under20StartHour = 13;
   static const int _under20EndHour = 16;
 
-  bool canGoOut(DateTime dob, bool works) {
-    bool _isWeekendField = _isWeekend(DateTime.now());
-    bool _isUnder20 = isUnder20(dob);
-    bool _isAbove65 = isAbove65(dob);
-
-    TimeLeft _timeLeft = TimeLeft(0, 0);
+  bool canGoOut(Person person) {
+    DateTime now = DateTime.now();
+    bool _isWeekendField = _isWeekend(now);
 
     if (!_isWeekendField) {
-      if (works) {
-        // _timeLeft = null;
+      if (person.works) {
         return true;
       }
     }
 
-    if (_isUnder20) {
+    if (person.isUnder20()) {
       DateTime now = DateTime.now();
-      return _isBetweenFreehours(
+      bool isFree = _isBetweenFreehours(
           DateTime(now.year, now.month, now.day, _under20StartHour),
           DateTime(now.year, now.month, now.day, _under20EndHour));
+      return isFree;
     }
 
-    if (_isAbove65) {
+    if (person.isAbove65()) {
       DateTime now = DateTime.now();
       return _isBetweenFreehours(
           DateTime(now.year, now.month, now.day, _over65StartHour),
@@ -74,28 +59,60 @@ class CurfewService {
     }
   }
 
+  TimeLeft getTimeLeft(Person person) {
+    bool _isWeekendField = _isWeekend(DateTime.now());
+
+    if (!_isWeekendField) {
+      if (person.works) {
+        return null;
+      }
+    }
+
+    if (person.isUnder20()) {
+      DateTime now = DateTime.now();
+      if (_isBetweenFreehours(
+          DateTime(now.year, now.month, now.day, _under20StartHour),
+          DateTime(now.year, now.month, now.day, _under20EndHour))) {
+        return TimeLeft(DateTime(now.year, now.day, _under20EndHour)
+            .difference(now)
+            .inMinutes);
+      } else {
+        return null;
+      }
+    }
+
+    if (person.isAbove65()) {
+      DateTime now = DateTime.now();
+      if (_isBetweenFreehours(
+          DateTime(now.year, now.month, now.day, _over65StartHour),
+          DateTime(now.year, now.month, now.day, _over65EndHour))) {
+        return TimeLeft(DateTime(now.year, now.day, _over65EndHour)
+            .difference(now)
+            .inMinutes);
+      } else {
+        return null;
+      }
+    }
+
+    if (_isWeekendField) {
+      DateTime now = DateTime.now();
+      if (_isBetweenFreehours(
+          DateTime(now.year, now.month, now.day, _weekendFreeStartHour),
+          DateTime(now.year, now.month, now.day, _weekendFreeEndhour))) {
+        return TimeLeft(DateTime(now.year, now.day, _weekendFreeEndhour)
+            .difference(now)
+            .inMinutes);
+      }
+    } else {
+      return null;
+    }
+
+    return null;
+  }
+
   bool _isBetweenFreehours(DateTime startTime, DateTime endTime) {
     DateTime now = DateTime.now();
     return (now.difference(startTime).inSeconds > 0 &&
         endTime.difference(now).inSeconds > 0);
   }
-
-  TimeLeft getTimeLeft(DateTime time) {}
-
-  // static Stream<TimeLeft> get timeLeft async* {
-  //   TimeLeft timeLeft = TimeLeft(2,10);
-  //   while () {
-  //     await Future.delayed(Duration(seconds: 1), () {
-  //       i++;
-  //     });
-  //     yield i;
-  //   }
-  // }
-}
-
-class TimeLeft {
-  int hours;
-  int minutes;
-
-  TimeLeft(this.hours, this.minutes);
 }

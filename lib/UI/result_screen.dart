@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sokagacikmayasagi/UI/result_negative_screen.dart';
+import 'package:sokagacikmayasagi/UI/result_positive_screen.dart';
 import 'package:sokagacikmayasagi/services/curfew_provider.dart';
-import 'package:sokagacikmayasagi/services/curfew_service.dart';
-import 'package:sokagacikmayasagi/shared_widgets/buttons.dart';
-import 'package:sokagacikmayasagi/consts.dart';
 
 class ResultScreen extends StatefulWidget {
   ResultScreen({Key key}) : super(key: key);
@@ -12,64 +11,17 @@ class ResultScreen extends StatefulWidget {
   _ResultScreenState createState() => _ResultScreenState();
 }
 
-String _isAlowed() {}
-
-String _getTimeLeftinfo() {
-  return 'Kalan sure';
-}
-
 class _ResultScreenState extends State<ResultScreen> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Scaffold(
-          body: Container(
-        // decoration: kPageBgDecoration,
-        child: SafeArea(
-            child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // StreamProvider<int>(
-              //   create: (_) => CurfewService.getInstance.personAge,
-              //   child: Consumer<int>(
-              //     builder: (context, i, child) => Text(i.toString()),
-              //   ),
-              // ),
-              Image.asset(
-                'assets/images/tebrikler.png',
-                width: MediaQuery.of(context).size.width / 3 * 2,
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              Text(
-                'Eve donmen icin kalan sure:',
-                style: Theme.of(context).textTheme.bodyText2,
-              ),
-              SizedBox(
-                height: 12,
-              ),
-              Text(_getTimeLeftinfo(),
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline5
-                      .copyWith(fontWeight: FontWeight.w700)),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width / 2,
-                child: WideButton(
-                  buttonText: 'Yenile',
-                  icon: Icon(Icons.refresh),
-                  onPressedFunction: () {},
-                ),
-              )
-            ],
-          ),
-        )),
-      )),
-    );
+    return Scaffold(body: Container(child: SafeArea(
+        child: Consumer<CurfewProvider>(builder: (context, value, child) {
+      return ResultPositiveScreen();
+      // if (value.canGoOut) {
+      //   return ResultPositiveScreen();
+      // } else {
+      //   return ResultNegativeScreen();
+      // }
+    }))));
   }
 }

@@ -7,10 +7,15 @@ class BannerAdvertisementView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _getAdWidget(context);
+    return _getAdWidget(context, true);
   }
 
-  Widget _getAdWidget(BuildContext context) {
+  Widget _getAdWidget(BuildContext context, bool isDebug) {
+    if (isDebug) {
+      return Center(
+        child: Text('ad here'),
+      );
+    }
     Admob.initialize(AdmobHelper.admobAppId);
     return Container(
         child: AdmobBanner(
