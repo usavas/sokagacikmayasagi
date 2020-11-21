@@ -27,7 +27,7 @@ dev_dependencies:
 flutter_icons:
   android: "launcher_icon"
   # ios: true
-  image_path: "assets/icons/face_mask.png"
+  image_path: "assets/icons/face_mask_nar.png"
 
 
 
