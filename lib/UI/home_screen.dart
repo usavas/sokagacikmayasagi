@@ -3,6 +3,7 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:sokagacikmayasagi/UI/advertisement_view.dart';
 import 'package:sokagacikmayasagi/UI/previous_queries.dart';
+import 'package:sokagacikmayasagi/models/person.dart';
 import 'package:sokagacikmayasagi/services/curfew_provider.dart';
 import 'package:sokagacikmayasagi/services/curfew_service.dart';
 import 'package:sokagacikmayasagi/services/curfew_service_mock.dart';
@@ -58,8 +59,6 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SafeArea(
           child: Center(
         child: Container(
-          // decoration: kPageBgDecoration,
-          // width: double.infinity,
           padding: const EdgeInsets.symmetric(horizontal: 32),
           child: Consumer<CurfewProvider>(builder: (context, provider, child) {
             return SingleChildScrollView(
@@ -75,6 +74,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: 98,
                   height: 84,
                 ),
+                // Image.asset(
+                //   'assets/images/stayathomevector.png',
+                //   width: MediaQuery.of(context).size.width * 0.5,
+                // ),
                 SizedBox(
                   height: 32,
                 ),
@@ -172,9 +175,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       provider.timeLeft = CurfewService.getInstance
                           .getTimeLeft(provider.person);
                       Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ResultScreen()));
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ResultScreen()))
+                          .then((value) {
+                        setState(() {
+                          provider.canGoOut = null;
+                          provider.person = Person();
+                          CurfewService.setInstanceNull();
+                        });
+                      });
                     } else {
                       Scaffold.of(context).showSnackBar(
                           SnackBar(content: Text('Doğum tarihinizi girin')));

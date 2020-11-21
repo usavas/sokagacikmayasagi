@@ -11,6 +11,10 @@ class CurfewService implements CurfewServiceInterface {
     return _instance = _instance ?? CurfewService._();
   }
 
+  static setInstanceNull() {
+    _instance = null;
+  }
+
   bool _isWeekend(DateTime date) {
     return (date.weekday == DateTime.saturday ||
         date.weekday == DateTime.sunday);
@@ -20,7 +24,7 @@ class CurfewService implements CurfewServiceInterface {
   static const int _weekendFreeEndhour = 20;
 
   static const int _over65StartHour = 10;
-  static const int _over65EndHour = 14;
+  static const int _over65EndHour = 13;
 
   static const int _under20StartHour = 13;
   static const int _under20EndHour = 16;

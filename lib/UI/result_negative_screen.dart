@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sokagacikmayasagi/services/curfew_provider.dart';
+import 'package:sokagacikmayasagi/services/curfew_service.dart';
 import 'package:sokagacikmayasagi/shared_widgets/buttons.dart';
 
 class ResultNegativeScreen extends StatelessWidget {
@@ -21,12 +24,19 @@ class ResultNegativeScreen extends StatelessWidget {
               SizedBox(height: 60),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 64),
-                child: WideButton(
-                  buttonText: 'Pekala :/',
-                  // backgroundColor: Color(0xff2c345c),
-                  onPressedFunction: () {},
+                child: Consumer<CurfewProvider>(
+                  builder: (context, provider, widget) {
+                    // provider.canGoOut = null;
+                    // provider.person = null;
+                    // CurfewService.setInstanceNull();
+                    return WideButton(
+                        buttonText: 'Pekala :/',
+                        onPressedFunction: () {
+                          Navigator.pop(context);
+                        });
+                  },
                 ),
-              )
+              ),
             ],
           ),
         ),
