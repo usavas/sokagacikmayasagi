@@ -1,7 +1,8 @@
 import 'package:sokagacikmayasagi/models/person.dart';
 import 'package:sokagacikmayasagi/models/time_left.dart';
+import 'package:sokagacikmayasagi/services/curfew_service_interface.dart';
 
-class CurfewService {
+class CurfewService implements CurfewServiceInterface {
   CurfewService._();
 
   static CurfewService _instance;

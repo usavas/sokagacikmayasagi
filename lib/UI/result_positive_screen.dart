@@ -4,12 +4,17 @@ import 'package:sokagacikmayasagi/models/time_left.dart';
 import 'package:sokagacikmayasagi/services/curfew_provider.dart';
 import 'package:sokagacikmayasagi/shared_widgets/buttons.dart';
 
-class ResultPositiveScreen extends StatelessWidget {
+class ResultPositiveScreen extends StatefulWidget {
   const ResultPositiveScreen({Key key}) : super(key: key);
 
   @override
+  _ResultPositiveScreenState createState() => _ResultPositiveScreenState();
+}
+
+class _ResultPositiveScreenState extends State<ResultPositiveScreen> {
+  @override
   Widget build(BuildContext context) {
-    return Consumer<CurfewProvider>(builder: (context, value, child) {
+    return Consumer<CurfewProvider>(builder: (context, provider, child) {
       return Container(
         color: Color(0xffffcc33),
         child: Center(
@@ -24,46 +29,34 @@ class ResultPositiveScreen extends StatelessWidget {
                 height: 20,
               ),
               Text(
-                'Eve donmen icin kalan sure:',
+                'Eve dönmen için kalan süre:',
                 style: Theme.of(context).textTheme.bodyText2,
               ),
-              (value.timeLeft == null || !value.timeLeft.isTimeLeft())
-                  ? Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 32),
-                      child: Text(
-                        'Uzgunum, suren doldu. Evde olmalisin',
+              Padding(padding: EdgeInsets.only(bottom: 10)),
+              StreamBuilder<TimeLeft>(
+                  stream: provider.getTimeLeft,
+                  initialData: provider.timeLeft,
+                  builder: (context, timeLeftSnap) {
+                    if (!timeLeftSnap.data.isTimeLeft()) {
+                      return Text(
+                        'Üzgünüm, süren doldu. Eve dönmelisin!',
                         style: Theme.of(context)
                             .textTheme
                             .headline5
                             .copyWith(fontWeight: FontWeight.w700),
                         textAlign: TextAlign.center,
-                      ),
-                    )
-                  //todo: test this with widget tests maybe
-                  : StreamProvider<TimeLeft>(
-                      create: (_) => value.getTimeLeft,
-                      child: Consumer<TimeLeft>(
-                        builder: (context, value, child) => Text(
-                          value.toString(),
-                          style: Theme.of(context)
-                              .textTheme
-                              .headline5
-                              .copyWith(fontWeight: FontWeight.w700),
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                    ),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                width: MediaQuery.of(context).size.width / 2,
-                child: WideButton(
-                  buttonText: 'Yenile',
-                  icon: Icon(Icons.refresh),
-                  onPressedFunction: () {},
-                ),
-              )
+                      );
+                    } else {
+                      return Text(
+                        timeLeftSnap.data.toString(),
+                        style: Theme.of(context)
+                            .textTheme
+                            .headline5
+                            .copyWith(fontWeight: FontWeight.w700),
+                        textAlign: TextAlign.center,
+                      );
+                    }
+                  }),
             ],
           ),
         ),

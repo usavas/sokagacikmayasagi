@@ -9,6 +9,10 @@ class CurfewProvider with ChangeNotifier {
   bool canGoOut;
   Person person = Person();
 
+  initializePerson() {
+    person = Person();
+  }
+
   setDateOfBirth(DateTime dob) {
     person.dob = dob;
     notifyListeners();
@@ -18,6 +22,8 @@ class CurfewProvider with ChangeNotifier {
     person.works = value;
     notifyListeners();
   }
+
+  // getTimeLeft() async
 
   Stream<TimeLeft> get getTimeLeft async* {
     while (timeLeft != null && timeLeft.isTimeLeft()) {
