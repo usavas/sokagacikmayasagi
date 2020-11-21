@@ -23,11 +23,9 @@ class CurfewProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // getTimeLeft() async
-
   Stream<TimeLeft> get getTimeLeft async* {
     while (timeLeft != null && timeLeft.isTimeLeft()) {
-      await Future.delayed(Duration(seconds: 1), () {
+      await Future.delayed(Duration(minutes: 1), () {
         timeLeft.decreaseMinutes();
       });
       yield timeLeft;

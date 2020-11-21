@@ -8,8 +8,6 @@ import 'package:sokagacikmayasagi/services/curfew_service_mock.dart';
 import 'package:sokagacikmayasagi/shared_widgets/buttons.dart';
 import 'package:sokagacikmayasagi/UI/result_screen.dart';
 
-import '../services/curfew_service.dart';
-
 class HomeScreen extends StatefulWidget {
   HomeScreen({Key key}) : super(key: key);
 
