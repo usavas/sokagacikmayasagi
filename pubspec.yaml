@@ -15,13 +15,21 @@ dependencies:
   shared_preferences: ^0.5.12+4
   provider: ^4.3.2+2
   age: ^0.0.1
-  flutter_launcher_icons: "^0.8.0"
   admob_flutter: ^0.3.4
   
+
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: "^0.8.1"
+
+flutter_icons:
+  android: "launcher_icon"
+  # ios: true
+  image_path: "assets/icons/face_mask.png"
+
+
 
 flutter:
   uses-material-design: true

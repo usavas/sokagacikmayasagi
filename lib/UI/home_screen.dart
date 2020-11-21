@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:sokagacikmayasagi/UI/advertisement_view.dart';
-import 'package:sokagacikmayasagi/UI/previous_queries.dart';
 import 'package:sokagacikmayasagi/UI/terms_conditions_screen.dart';
 import 'package:sokagacikmayasagi/consts.dart';
 import 'package:sokagacikmayasagi/models/person.dart';
@@ -111,23 +110,25 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: 32,
                 ),
                 InkWell(
-                  child: ListTile(
-                    leading: Icon(Icons.calendar_today),
-                    title: Text(
-                      'Doğum Tarihin',
-                      style: Theme.of(context).textTheme.bodyText1,
-                    ),
-                    trailing: Text(
-                      (provider.person.dob != null)
-                          ? (provider.person.dobToString())
-                          : 'Seçilmedi',
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText2
-                          .copyWith(
-                              color: Colors.green[800],
-                              fontWeight: FontWeight.bold)
-                          .apply(fontSizeDelta: 1.2),
+                  child: Card(
+                    child: ListTile(
+                      leading: Icon(Icons.calendar_today),
+                      title: Text(
+                        'Doğum Tarihin',
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ),
+                      trailing: Text(
+                        (provider.person.dob != null)
+                            ? (provider.person.dobToString())
+                            : 'Seçilmedi',
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText2
+                            .copyWith(
+                                color: Colors.green[800],
+                                fontWeight: FontWeight.bold)
+                            .apply(fontSizeDelta: 1.2),
+                      ),
                     ),
                   ),
                   onTap: () {
@@ -145,45 +146,48 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                 ),
                 InkWell(
-                    child: ListTile(
-                  leading: Icon(provider.person.works ?? false
-                      ? Icons.check_box
-                      : Icons.check_box_outline_blank),
-                  title: Text(
-                    'Sigortalı bir işte çalışıyor musun?',
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                  trailing: Text(
-                    provider.person.works ?? false ? 'Evet' : 'Hayır',
-                    style: Theme.of(context).textTheme.bodyText2.copyWith(
-                        color: Colors.green[800], fontWeight: FontWeight.bold),
-                  ),
-                  onTap: () {
-                    if (!provider.person.works) {
-                      if (provider.person?.dob == null) {
-                        showDialog(
-                          context: context,
-                          builder: (context) => SimpleAlertDialog(
-                            content: 'Önce doğum tarihi bilgilerini gir',
-                            cancelButtonText: 'Tamam',
-                          ),
-                        );
-                        return;
-                      } else if (provider.person.getAge() < 14) {
-                        showDialog(
+                    child: Card(
+                  child: ListTile(
+                    leading: Icon(provider.person.works ?? false
+                        ? Icons.check_box
+                        : Icons.check_box_outline_blank),
+                    title: Text(
+                      'Sigortalı bir işte çalışıyor musun?',
+                      style: Theme.of(context).textTheme.bodyText1,
+                    ),
+                    trailing: Text(
+                      provider.person.works ?? false ? 'Evet' : 'Hayır',
+                      style: Theme.of(context).textTheme.bodyText2.copyWith(
+                          color: Colors.green[800],
+                          fontWeight: FontWeight.bold),
+                    ),
+                    onTap: () {
+                      if (!provider.person.works) {
+                        if (provider.person?.dob == null) {
+                          showDialog(
                             context: context,
                             builder: (context) => SimpleAlertDialog(
-                                  content:
-                                      'Sigortalı bir işte çalışabiliyor olmak için en az 14 yaşında olmalısın',
-                                  cancelButtonText: 'Pekala',
-                                ));
-                        return;
+                              content: 'Önce doğum tarihi bilgilerini gir',
+                              cancelButtonText: 'Tamam',
+                            ),
+                          );
+                          return;
+                        } else if (provider.person.getAge() < 14) {
+                          showDialog(
+                              context: context,
+                              builder: (context) => SimpleAlertDialog(
+                                    content:
+                                        'Sigortalı bir işte çalışabiliyor olmak için en az 14 yaşında olmalısın',
+                                    cancelButtonText: 'Pekala',
+                                  ));
+                          return;
+                        }
                       }
-                    }
-                    setState(() {
-                      provider.person.works = !provider.person.works;
-                    });
-                  },
+                      setState(() {
+                        provider.person.works = !provider.person.works;
+                      });
+                    },
+                  ),
                 )),
                 SizedBox(
                   height: 20,

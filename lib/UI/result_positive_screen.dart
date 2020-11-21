@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sokagacikmayasagi/UI/advertisement_view.dart';
 import 'package:sokagacikmayasagi/models/time_left.dart';
 import 'package:sokagacikmayasagi/services/curfew_provider.dart';
 
@@ -69,6 +70,7 @@ class _ResultPositiveScreenState extends State<ResultPositiveScreen> {
                         textAlign: TextAlign.center,
                       ),
                     ),
+              BannerAdvertisementView(),
             ],
           ),
         ),

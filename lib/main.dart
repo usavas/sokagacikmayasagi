@@ -14,33 +14,41 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<CurfewProvider>(
-      create: (context) => CurfewProvider(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: 'Dışarı Çıkabilir miyim?',
-        theme: ThemeData(
-          primaryColor: Colors.red[400],
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-          textTheme: TextTheme(
-            headline5: TextStyle(
-                color: Colors.black87,
-                fontSize: 24,
-                fontWeight: FontWeight.normal),
-            headline6: TextStyle(
-                color: Colors.black87,
-                fontSize: 18,
-                fontWeight: FontWeight.normal),
-            bodyText1: TextStyle(color: Colors.black87, fontSize: 18),
-            bodyText2: TextStyle(color: Colors.black87, fontSize: 16),
-            button: TextStyle(color: Colors.black87, fontSize: 20),
+        create: (context) => CurfewProvider(),
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Dışarı Çıkabilir miyim?',
+          theme: ThemeData(
+            primaryColor: Colors.red[400],
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+            textTheme: TextTheme(
+              headline5: TextStyle(
+                  color: Colors.black87,
+                  fontSize: 24,
+                  fontWeight: FontWeight.normal),
+              headline6: TextStyle(
+                  color: Colors.black87,
+                  fontSize: 18,
+                  fontWeight: FontWeight.normal),
+              bodyText1: TextStyle(color: Colors.black87, fontSize: 18),
+              bodyText2: TextStyle(color: Colors.black87, fontSize: 16),
+              button: TextStyle(color: Colors.black87, fontSize: 20),
+            ),
           ),
-        ),
-        home: FutureBuilder(
-            future: SharedPrefService.instance.getTermsConditionsRead(),
-            builder: (context, snapshot) => snapshot.data ?? false
-                ? HomeScreen()
-                : TermsAndConditionsScreen()),
-      ),
-    );
+          home: FutureBuilder(
+              future: SharedPrefService.instance.getTermsConditionsRead(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  if (snapshot.data) {
+                    return HomeScreen();
+                  } else {
+                    return TermsAndConditionsScreen();
+                  }
+                }
+                return Scaffold(
+                  body: Center(child: LinearProgressIndicator()),
+                );
+              }),
+        ));
   }
 }

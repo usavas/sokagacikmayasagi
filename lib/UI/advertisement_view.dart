@@ -9,15 +9,26 @@ class BannerAdvertisementView extends StatelessWidget {
   Widget build(BuildContext context) => _getAdWidget(context, true);
 
   Widget _getAdWidget(BuildContext context, bool isDebug) {
-    Admob.initialize(AdmobHelper.admobAppId);
-    return Container(
-        child: AdmobBanner(
-      adUnitId: AdmobHelper.admobBannerAdId,
-      adSize: AdmobBannerSize.FULL_BANNER,
-      listener: (AdmobAdEvent event, Map<String, dynamic> args) {
-        handleEvent(event, args, 'Banner');
-      },
-    ));
+    return FutureBuilder(
+        future: _getAdMobBannerAdAsync(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return Container(
+                child: AdmobBanner(
+              adUnitId: AdmobHelper.admobBannerAdId,
+              adSize: AdmobBannerSize.FULL_BANNER,
+              listener: (AdmobAdEvent event, Map<String, dynamic> args) {
+                handleEvent(event, args, 'Banner');
+              },
+            ));
+          } else {
+            return SizedBox();
+          }
+        });
+  }
+
+  _getAdMobBannerAdAsync() async {
+    return Admob.initialize(AdmobHelper.admobAppId);
   }
 
   void handleEvent(AdmobAdEvent event, args, String s) {
