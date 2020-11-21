@@ -8,6 +8,7 @@ const Color kWidgetBgColor = Color(0xFFFCFCFC);
 const double kWidgetInnerPadding = 16.0;
 const double kWidgetPadding = 32.0;
 const Color kActionButtonColor = Color(0xFF3FE4F1);
+const Color kPageBackgroundColor = Color(0xffECE5DD);
 
 const BoxDecoration kPageBgDecoration = BoxDecoration(
     gradient: LinearGradient(

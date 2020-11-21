@@ -28,6 +28,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/texts/terms_and_conditions.txt
 
   # fonts:
   #   - family: Schyler

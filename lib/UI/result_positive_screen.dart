@@ -28,7 +28,7 @@ class _ResultPositiveScreenState extends State<ResultPositiveScreen> {
                 height: 20,
               ),
               Padding(padding: EdgeInsets.only(bottom: 10)),
-              (provider.timeLeft ?? false)
+              (provider.timeLeft?.isTimeLeft() ?? false)
                   ? StreamBuilder<TimeLeft>(
                       stream: provider.getTimeLeft,
                       initialData: provider.timeLeft,

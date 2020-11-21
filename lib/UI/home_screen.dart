@@ -3,10 +3,11 @@ import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:sokagacikmayasagi/UI/advertisement_view.dart';
 import 'package:sokagacikmayasagi/UI/previous_queries.dart';
+import 'package:sokagacikmayasagi/UI/terms_conditions_screen.dart';
+import 'package:sokagacikmayasagi/consts.dart';
 import 'package:sokagacikmayasagi/models/person.dart';
 import 'package:sokagacikmayasagi/services/curfew_provider.dart';
 import 'package:sokagacikmayasagi/services/curfew_service.dart';
-import 'package:sokagacikmayasagi/services/curfew_service_mock.dart';
 import 'package:sokagacikmayasagi/shared_widgets/simple_alert_dialog.dart';
 import 'package:sokagacikmayasagi/shared_widgets/buttons.dart';
 import 'package:sokagacikmayasagi/UI/result_screen.dart';
@@ -22,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffECE5DD),
+      backgroundColor: kPageBackgroundColor,
       drawer: Drawer(
         child: Column(
           children: [
@@ -32,19 +33,32 @@ class _HomeScreenState extends State<HomeScreen> {
               height: 80,
               alignment: Alignment.centerLeft,
               width: double.infinity,
-              child: Text('Ayarlar'),
             ),
             InkWell(
               onTap: () {
                 Navigator.of(context).pop();
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => PreviousQueries()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            TermsAndConditionsScreen(isAcceptButton: false)));
               },
               child: ListTile(
-                leading: Icon(Icons.archive),
-                title: Text('Önceki sorgulamalarım'),
+                leading: Icon(Icons.info),
+                title: Text('Hüküm ve Koşulları Oku'),
               ),
             ),
+            // InkWell(
+            //   onTap: () {
+            //     Navigator.of(context).pop();
+            //     Navigator.push(context,
+            //         MaterialPageRoute(builder: (context) => PreviousQueries()));
+            //   },
+            //   child: ListTile(
+            //     leading: Icon(Icons.archive),
+            //     title: Text('Önceki sorgulamalarım'),
+            //   ),
+            // ),
             Divider(
               height: 6,
               thickness: 1,
@@ -55,7 +69,7 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         actions: [],
         centerTitle: true,
-        title: Text('Sokağa Çıkma Yasağı'),
+        title: Text('Pandemi Bilgilendirme'),
       ),
       body: SafeArea(
           child: Center(
@@ -96,90 +110,83 @@ class _HomeScreenState extends State<HomeScreen> {
                 SizedBox(
                   height: 32,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    FlatButton(
-                      onPressed: () {
-                        DatePicker.showDatePicker(context,
-                            showTitleActions: true,
-                            minTime: DateTime(1900),
-                            maxTime: DateTime.now(), onConfirm: (date) {
-                          setState(() {
-                            provider.person.dob = date;
-                          });
-                        },
-                            onChanged: (date) {},
-                            currentTime: DateTime.now(),
-                            locale: LocaleType.tr);
-                      },
-                      child: Text(
-                        'Dogum Tarihin',
-                        style: TextStyle(
-                            color: Color(0xFF2258d6),
-                            fontSize: 16,
-                            decoration: TextDecoration.underline),
-                      ),
+                InkWell(
+                  child: ListTile(
+                    leading: Icon(Icons.calendar_today),
+                    title: Text(
+                      'Doğum Tarihin',
+                      style: Theme.of(context).textTheme.bodyText1,
                     ),
-                    Expanded(
-                      child: Container(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black38, width: 0.8),
-                        ),
-                        child: Text(
-                          (provider.person.dob != null)
-                              ? (provider.person.dobToString())
-                              : '',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodyText1
-                              .copyWith(fontWeight: FontWeight.w400),
-                        ),
-                      ),
+                    trailing: Text(
+                      (provider.person.dob != null)
+                          ? (provider.person.dobToString())
+                          : 'Seçilmedi',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyText2
+                          .copyWith(
+                              color: Colors.green[800],
+                              fontWeight: FontWeight.bold)
+                          .apply(fontSizeDelta: 1.2),
                     ),
-                  ],
+                  ),
+                  onTap: () {
+                    DatePicker.showDatePicker(context,
+                        showTitleActions: true,
+                        minTime: DateTime(1900),
+                        maxTime: DateTime.now(), onConfirm: (date) {
+                      setState(() {
+                        provider.person.dob = date;
+                      });
+                    },
+                        onChanged: (date) {},
+                        currentTime: DateTime.now(),
+                        locale: LocaleType.tr);
+                  },
                 ),
-                Row(
-                  children: [
-                    Checkbox(
-                      value: provider.person.works ?? false,
-                      onChanged: (value) {
-                        if (value) {
-                          if (provider.person?.dob == null) {
-                            showDialog(
-                              context: context,
-                              builder: (context) => SimpleAlertDialog(
-                                content: 'Önce doğum tarihi bilgilerini gir',
-                                cancelButtonText: 'Tamam',
-                              ),
-                            );
-                            return;
-                          } else if (provider.person.getAge() < 14) {
-                            showDialog(
-                                context: context,
-                                builder: (context) => SimpleAlertDialog(
-                                      content:
-                                          'Sigortalı bir işte çalışabiliyor olmak için en az 14 yaşında olmalısın',
-                                      cancelButtonText: 'Pekala',
-                                    ));
-                            return;
-                          }
-                        }
-                        setState(() {
-                          provider.person.works = value;
-                        });
-                      },
-                    ),
-                    Text(
-                      'Sigortalı bir işte çalışıyor musunuz?',
-                      style: Theme.of(context).textTheme.bodyText2,
-                    ),
-                  ],
-                ),
+                InkWell(
+                    child: ListTile(
+                  leading: Icon(provider.person.works ?? false
+                      ? Icons.check_box
+                      : Icons.check_box_outline_blank),
+                  title: Text(
+                    'Sigortalı bir işte çalışıyor musun?',
+                    style: Theme.of(context).textTheme.bodyText1,
+                  ),
+                  trailing: Text(
+                    provider.person.works ?? false ? 'Evet' : 'Hayır',
+                    style: Theme.of(context).textTheme.bodyText2.copyWith(
+                        color: Colors.green[800], fontWeight: FontWeight.bold),
+                  ),
+                  onTap: () {
+                    if (!provider.person.works) {
+                      if (provider.person?.dob == null) {
+                        showDialog(
+                          context: context,
+                          builder: (context) => SimpleAlertDialog(
+                            content: 'Önce doğum tarihi bilgilerini gir',
+                            cancelButtonText: 'Tamam',
+                          ),
+                        );
+                        return;
+                      } else if (provider.person.getAge() < 14) {
+                        showDialog(
+                            context: context,
+                            builder: (context) => SimpleAlertDialog(
+                                  content:
+                                      'Sigortalı bir işte çalışabiliyor olmak için en az 14 yaşında olmalısın',
+                                  cancelButtonText: 'Pekala',
+                                ));
+                        return;
+                      }
+                    }
+                    setState(() {
+                      provider.person.works = !provider.person.works;
+                    });
+                  },
+                )),
                 SizedBox(
-                  height: 32,
+                  height: 20,
                 ),
                 WideButton(
                   buttonText: 'Kontrol et',

@@ -6,9 +6,7 @@ class BannerAdvertisementView extends StatelessWidget {
   const BannerAdvertisementView({Key key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    return _getAdWidget(context, true);
-  }
+  Widget build(BuildContext context) => _getAdWidget(context, true);
 
   Widget _getAdWidget(BuildContext context, bool isDebug) {
     Admob.initialize(AdmobHelper.admobAppId);

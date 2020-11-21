@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sokagacikmayasagi/UI/home_screen.dart';
+import 'package:sokagacikmayasagi/UI/terms_conditions_screen.dart';
 import 'package:sokagacikmayasagi/services/curfew_provider.dart';
+import 'package:sokagacikmayasagi/services/shared_pref_service.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,7 +17,7 @@ class MyApp extends StatelessWidget {
       create: (context) => CurfewProvider(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        title: 'Sokaga Cikma Yasagi',
+        title: 'Dışarı Çıkabilir miyim?',
         theme: ThemeData(
           primaryColor: Colors.red[400],
           visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -33,7 +35,11 @@ class MyApp extends StatelessWidget {
             button: TextStyle(color: Colors.black87, fontSize: 20),
           ),
         ),
-        home: HomeScreen(),
+        home: FutureBuilder(
+            future: SharedPrefService.instance.getTermsConditionsRead(),
+            builder: (context, snapshot) => snapshot.data ?? false
+                ? HomeScreen()
+                : TermsAndConditionsScreen()),
       ),
     );
   }

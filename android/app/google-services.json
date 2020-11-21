@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "818921345496",
+    "firebase_url": "https://curfewapp-1.firebaseio.com",
+    "project_id": "curfewapp-1",
+    "storage_bucket": "curfewapp-1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:818921345496:android:8c6c9e163286a8075522ad",
+        "android_client_info": {
+          "package_name": "com.appicient.curfewapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "818921345496-pjcsebh3r21fhbdq4h3kbsc17nh3a2ms.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.appicient.curfewapp",
+            "certificate_hash": "ac80cd69510544658f15f6f2ec2c6024c6c12f8b"
+          }
+        },
+        {
+          "client_id": "818921345496-foiu0ue29cmn4h06pd8nfi8vtr5aiqar.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANwr1Mc-wBsFdEjALJEx5SvnRCoueFzqs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "818921345496-foiu0ue29cmn4h06pd8nfi8vtr5aiqar.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
