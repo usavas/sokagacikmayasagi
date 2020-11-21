@@ -70,6 +70,9 @@ class _ResultPositiveScreenState extends State<ResultPositiveScreen> {
                         textAlign: TextAlign.center,
                       ),
                     ),
+              SizedBox(
+                height: 20,
+              ),
               BannerAdvertisementView(),
             ],
           ),
