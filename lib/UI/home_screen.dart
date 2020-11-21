@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:sokagacikmayasagi/UI/advertisement_view.dart';
 import 'package:sokagacikmayasagi/UI/previous_queries.dart';
 import 'package:sokagacikmayasagi/services/curfew_provider.dart';
+import 'package:sokagacikmayasagi/services/curfew_service.dart';
 import 'package:sokagacikmayasagi/services/curfew_service_mock.dart';
 import 'package:sokagacikmayasagi/shared_widgets/buttons.dart';
 import 'package:sokagacikmayasagi/UI/result_screen.dart';
@@ -166,9 +167,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   onPressedFunction: () {
                     DateTime date = provider.person.dob;
                     if (date != null) {
-                      provider.canGoOut = CurfewServiceMock.getInstance
-                          .canGoOut(provider.person);
-                      provider.timeLeft = CurfewServiceMock.getInstance
+                      provider.canGoOut =
+                          CurfewService.getInstance.canGoOut(provider.person);
+                      provider.timeLeft = CurfewService.getInstance
                           .getTimeLeft(provider.person);
                       Navigator.push(
                           context,

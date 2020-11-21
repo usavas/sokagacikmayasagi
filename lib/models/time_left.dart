@@ -24,6 +24,6 @@ class TimeLeft {
 
   @override
   String toString() {
-    return "${this.hours.toString()} saat ${this.minutes.toString()} dakika";
+    return "${this.hours != 0 ? this.hours.toString() + ' saat' : ''} ${this.minutes.toString()} dakika";
   }
 }

@@ -20,7 +20,7 @@ class CurfewService implements CurfewServiceInterface {
   static const int _weekendFreeEndhour = 20;
 
   static const int _over65StartHour = 10;
-  static const int _over65EndHour = 13;
+  static const int _over65EndHour = 14;
 
   static const int _under20StartHour = 13;
   static const int _under20EndHour = 16;
@@ -74,7 +74,7 @@ class CurfewService implements CurfewServiceInterface {
       if (_isBetweenFreehours(
           DateTime(now.year, now.month, now.day, _under20StartHour),
           DateTime(now.year, now.month, now.day, _under20EndHour))) {
-        return TimeLeft(DateTime(now.year, now.day, _under20EndHour)
+        return TimeLeft(DateTime(now.year, now.month, now.day, _under20EndHour)
             .difference(now)
             .inMinutes);
       } else {
@@ -87,9 +87,10 @@ class CurfewService implements CurfewServiceInterface {
       if (_isBetweenFreehours(
           DateTime(now.year, now.month, now.day, _over65StartHour),
           DateTime(now.year, now.month, now.day, _over65EndHour))) {
-        return TimeLeft(DateTime(now.year, now.day, _over65EndHour)
+        TimeLeft timeLef = TimeLeft(DateTime(now.year, now.month, now.day, 14)
             .difference(now)
             .inMinutes);
+        return timeLef;
       } else {
         return null;
       }
@@ -100,9 +101,10 @@ class CurfewService implements CurfewServiceInterface {
       if (_isBetweenFreehours(
           DateTime(now.year, now.month, now.day, _weekendFreeStartHour),
           DateTime(now.year, now.month, now.day, _weekendFreeEndhour))) {
-        return TimeLeft(DateTime(now.year, now.day, _weekendFreeEndhour)
-            .difference(now)
-            .inMinutes);
+        return TimeLeft(
+            DateTime(now.year, now.month, now.day, _weekendFreeEndhour)
+                .difference(now)
+                .inMinutes);
       }
     } else {
       return null;

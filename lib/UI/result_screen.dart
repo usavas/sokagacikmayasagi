@@ -16,12 +16,12 @@ class _ResultScreenState extends State<ResultScreen> {
   Widget build(BuildContext context) {
     return Scaffold(body: Container(child: SafeArea(
         child: Consumer<CurfewProvider>(builder: (context, value, child) {
-      return ResultPositiveScreen();
-      // if (value.canGoOut) {
-      //   return ResultPositiveScreen();
-      // } else {
-      //   return ResultNegativeScreen();
-      // }
+      // return ResultPositiveScreen();
+      if (value.canGoOut) {
+        return ResultPositiveScreen();
+      } else {
+        return ResultNegativeScreen();
+      }
     }))));
   }
 }
