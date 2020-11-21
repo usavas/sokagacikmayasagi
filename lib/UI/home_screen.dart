@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:provider/provider.dart';
 import 'package:sokagacikmayasagi/UI/advertisement_view.dart';
+import 'package:sokagacikmayasagi/UI/previous_queries.dart';
 import 'package:sokagacikmayasagi/services/curfew_provider.dart';
 import 'package:sokagacikmayasagi/services/curfew_service_mock.dart';
 import 'package:sokagacikmayasagi/shared_widgets/buttons.dart';
@@ -21,6 +22,35 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xffECE5DD),
+      drawer: Drawer(
+        child: Column(
+          children: [
+            Container(
+              padding: EdgeInsets.only(left: 20, top: 12),
+              color: Theme.of(context).primaryColor,
+              height: 80,
+              alignment: Alignment.centerLeft,
+              width: double.infinity,
+              child: Text('Ayarlar'),
+            ),
+            InkWell(
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => PreviousQueries()));
+              },
+              child: ListTile(
+                leading: Icon(Icons.archive),
+                title: Text('Önceki sorgulamalarım'),
+              ),
+            ),
+            Divider(
+              height: 6,
+              thickness: 1,
+            ),
+          ],
+        ),
+      ),
       appBar: AppBar(
         actions: [],
         centerTitle: true,
