@@ -7,6 +7,7 @@ import 'package:sokagacikmayasagi/models/person.dart';
 import 'package:sokagacikmayasagi/services/curfew_provider.dart';
 import 'package:sokagacikmayasagi/services/curfew_service.dart';
 import 'package:sokagacikmayasagi/services/curfew_service_mock.dart';
+import 'package:sokagacikmayasagi/shared_widgets/simple_alert_dialog.dart';
 import 'package:sokagacikmayasagi/shared_widgets/buttons.dart';
 import 'package:sokagacikmayasagi/UI/result_screen.dart';
 
@@ -74,10 +75,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: 98,
                   height: 84,
                 ),
-                // Image.asset(
-                //   'assets/images/stayathomevector.png',
-                //   width: MediaQuery.of(context).size.width * 0.5,
-                // ),
                 SizedBox(
                   height: 32,
                 ),
@@ -149,9 +146,30 @@ class _HomeScreenState extends State<HomeScreen> {
                     Checkbox(
                       value: provider.person.works ?? false,
                       onChanged: (value) {
-                        // setState(() {
-                        provider.person.works = value;
-                        // });
+                        if (value) {
+                          if (provider.person?.dob == null) {
+                            showDialog(
+                              context: context,
+                              builder: (context) => SimpleAlertDialog(
+                                content: 'Önce doğum tarihi bilgilerini gir',
+                                cancelButtonText: 'Tamam',
+                              ),
+                            );
+                            return;
+                          } else if (provider.person.getAge() < 14) {
+                            showDialog(
+                                context: context,
+                                builder: (context) => SimpleAlertDialog(
+                                      content:
+                                          'Sigortalı bir işte çalışabiliyor olmak için en az 14 yaşında olmalısın',
+                                      cancelButtonText: 'Pekala',
+                                    ));
+                            return;
+                          }
+                        }
+                        setState(() {
+                          provider.person.works = value;
+                        });
                       },
                     ),
                     Text(
